@@ -1,13 +1,16 @@
 import React from "react";
 
 export const WritePost = ({ socket }) => {
-  const postID = React.useId();
+  const suffixID = React.useId();
+  const [numID, setNumID] = React.useState(0);
   const [title, setTitle] = React.useState(``);
   const [postContent, setPostContent] = React.useState(``);
   const submitPost = (ev) => {
+    setNumID((prevID) => prevID + 1);
+    const postID = numID + suffixID;
     ev.preventDefault();
     if (title === `` && postContent === ``) return;
-    socket.emit(`new post`, {
+    socket.emit(`newPostEvt`, {
       id: postID,
       title,
       postContent,
@@ -15,8 +18,7 @@ export const WritePost = ({ socket }) => {
       username: localStorage.getItem(`username`),
     });
     setTitle(``);
-    alert(title, postContent);
-    setPostContent(`  ```);
+    setPostContent(``);
   };
   const handleOnChange = ({ target: { value } }) => setTitle(value);
   const handleContentChange = ({ target: { value } }) => setPostContent(value);
@@ -31,13 +33,14 @@ export const WritePost = ({ socket }) => {
           id="title"
           name="title"
           value={title}
+          required
           onChange={handleOnChange}
         />
       </div>
       <form onSubmit={submitPost}>
         <textarea
           name="post"
-          id=""
+          required
           value={postContent}
           onChange={handleContentChange}
           cols="30"

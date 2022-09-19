@@ -1,3 +1,4 @@
+import React from "react";
 import Nav from "../../components/nav";
 import Page404 from "./../page404/";
 import PostComponent from "./../../components/posts/";
@@ -17,11 +18,11 @@ const PostPage = () => {
           <br />
           <br />
           <br />
-          <PostComponent />
+          <PostComponent socket={socket} />
         </>
       ) : (
         <>
-          <h1 className=" center">Sign in to view posts</h1>
+          <h1 className="center">Sign in to view posts</h1>
           <Page404 />
         </>
       )}
