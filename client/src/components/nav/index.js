@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { ReactComponent as NotificationIcon } from "../../assets/Notification.svg";
 
 const Nav = () => {
   const navigate = useNavigate();
@@ -10,8 +11,15 @@ const Nav = () => {
   return (
     <header className="flex">
       <b>NC.</b>
-      <div>
-        <span>icon</span>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "1rem",
+        }}
+      >
+        <NotificationIcon />
         <button onClick={handleLogOut}>Log out</button>
       </div>
     </header>
