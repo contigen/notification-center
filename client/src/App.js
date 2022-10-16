@@ -1,13 +1,28 @@
+import React from "react";
 import "./App.css";
 import Home from "./pages/home/index";
+import { socket } from "./lib/socket";
 
 function App() {
+  React.useEffect(() => {
+    socket.on(
+      `onLoad`,
+      (posts) => {
+        localStorage.setItem(`initialPosts`, JSON.stringify(posts));
+      },
+      []
+    );
+    return () => {
+      socket.off(`onLoad`);
+    };
+  }, []);
+
   return (
     <>
       <header>
         <hgroup>
-          <h1>Notification center</h1>
-          <p>Building a notification center like dev.to's</p>
+          <h1>Posts center</h1>
+          <p>Building a posts center</p>
         </hgroup>
       </header>
       <section>
