@@ -1,8 +1,11 @@
 import React from "react";
-const PostComponent = ({ socket }) => {
+import Comment from "./../comment/";
+
+const PostComponent = ({ socket, initialPosts }) => {
+  const [showComment, setShowComment] = React.useState(false);
   const [posts, setPosts] = React.useState(() => {
-    // fetch existing posts if it's available
-    return socket.on(`onLoad`, (post) => setPosts(post)) || [];
+    const initials = JSON.parse(localStorage.getItem(`initialPosts`)) || [];
+    return initials;
   });
   React.useEffect(() => {
     socket.on(`postsEvt`, (post) => setPosts(post));
@@ -18,6 +21,10 @@ const PostComponent = ({ socket }) => {
             <p>{post.postContent}</p>
             <button onClick={() => sendLike(post.id)}>like post</button>
             <p>{post.likes}</p>
+            <button onClick={() => setShowComment(!showComment)}>
+              comment
+            </button>
+            <Comment showComment={showComment} />
           </div>
         ))}
     </section>
